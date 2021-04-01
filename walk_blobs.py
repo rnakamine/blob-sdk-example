@@ -10,11 +10,13 @@ def main():
     blob_name = 'sample.txt'
 
     blob_service_client = BlobServiceClient.from_connection_string(connect_str)
-    blob_client = blob_service_client.get_blob_client(
-        container_name, blob=blob_name)
+    container_client = blob_service_client.get_container_client(
+        'company-settings')
 
-    blob_client.delete_blob()
-    return 'delete: {}'.
+    list_blobs = container_client.walk_blobs(
+        name_starts_with=None, delimiter='/')
+    for b in list_blobs:
+        print(b.name)
 
 
 if __name__ == '__main__':
